@@ -1,5 +1,6 @@
 use mockall_double::double;
 mod thing {
+    #[cfg(test)]
     use mockall::automock;
     pub struct Thing {}
     #[automock]
@@ -22,10 +23,19 @@ struct Staff {
 }
 
 impl Staff {
+    // can't work
+    // fn new() -> Staff {
+    //     Staff {
+    //         thing: Thing {}
+    //     }
+    // }
+
     fn ok(&self)-> u32{
         self.thing.foo()
     }
 }
+
+
 #[cfg(test)]
 mod t {
     use super::*;
