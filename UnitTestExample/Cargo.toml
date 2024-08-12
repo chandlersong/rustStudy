@@ -1,0 +1,10 @@
+[package]
+name = "UnitTestExample"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mockall_double = "0.3.1"
+
+[dev-dependencies]
+mockall = "0.12.0"

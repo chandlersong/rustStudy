@@ -1,5 +1,3 @@
-use std::fmt::Display;
-
 trait Shape {
     fn display_info(&self);
 }
