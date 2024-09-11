@@ -1,4 +1,5 @@
 use std::sync::mpsc;
+use std::sync::mpsc::Receiver;
 use std::thread;
 
 async fn a() -> i32{
@@ -6,7 +7,7 @@ async fn a() -> i32{
    18
 }
 
-fn b() -> i32 {
+fn b() -> Receiver<i32> {
     let (tx, rx) = mpsc::channel();
     // 同步方法B调用异步方法A
     // 在新线程中执行"异步"任务
@@ -16,20 +17,22 @@ fn b() -> i32 {
             .block_on(a());
         tx.send(result).unwrap();
     });
+    rx
 
-    match rx.recv() {
-        Ok(result) => { result * 2 }
-        Err(e) => {
-            print!("Error: {} \n", e);
-            0
-        }
-    }
 }
 
 async fn c() -> i32 {
     // 异步方法C调用同步方法B
-    let result = b();
-    result + 1
+    let rx = b();
+
+    let res = match rx.recv() {
+        Ok(result) => { result * 2 }
+        Err(e) => {
+            print!("Error: {} \n", e);
+            panic!("error")
+        }
+    };
+    res + 1
 }
 
 
