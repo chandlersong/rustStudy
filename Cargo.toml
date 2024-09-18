@@ -7,6 +7,6 @@ members = [
     "TraitTest",
     "UnitTestExample",
     "concurrency_test"
-]
+, "websocket_ex"]
 
 
