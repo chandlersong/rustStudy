@@ -4,7 +4,7 @@ mod tests {
 
     #[test]
     fn test_hello() {
-        let (mut socket, response) = connect("wss://toolin.cn/echo").expect("Can't connect");
+        let (mut socket, response) = connect("wss://fstream.binance.com/pm").expect("Can't connect");
 
         println!("Connected to the server");
         println!("Response HTTP code: {}", response.status());
@@ -19,4 +19,6 @@ mod tests {
             println!("Received: {msg}");
         }
     }
+
+
 }
