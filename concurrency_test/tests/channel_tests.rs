@@ -20,17 +20,25 @@ mod tests {
     #[test]
     fn test_channel_multi_receive() {
         // 创建一个多生产者多消费者的通道
-        let (tx, rx) = channel::unbounded();
+        let (tx, _rx) = channel::unbounded();
 
         // 创建多个接收者
         let num_receivers = 3;
         let mut handles = vec![];
 
         for id in 0..num_receivers {
-            let rx = rx.clone(); // 克隆接收者
+            let rx = _rx.clone(); // 克隆接收者
             let handle = thread::spawn(move || {
-                while let Ok(message) = rx.recv() {
-                    println!("接收者 {} 收到消息: {}", id, message);
+                loop {
+                    match rx.recv() {
+                        Ok(message) => {
+                            println!("Consumer {} received: {}", id, message);
+                        }
+                        Err(_) => {
+                            println!("Consumer {}: No more messages", id);
+                            break; // 如果通道关闭，退出循环
+                        }
+                    }
                 }
             });
             handles.push(handle);
