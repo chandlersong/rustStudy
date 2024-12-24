@@ -4,6 +4,7 @@ use tokio::time::{self, Duration};
 /*
  * 这个例子，主要是在producer和consumer的模式下。
  * consumer为一个单独的协程。但是主协程不太清楚怎么来做。
+ * 这个是每个协程单独起一个。后台运行
  */
 struct Consumer {
     tx: mpsc::Sender<(i32, oneshot::Sender<i32>)>,
