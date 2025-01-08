@@ -5,7 +5,7 @@ resolver = "2"
 
 members = [
     "TraitTest",
-    "UnitTestExample",
+    "UnitTestExample", "cache_example",
     "concurrency_test"
 , "websocket_ex"]
 
