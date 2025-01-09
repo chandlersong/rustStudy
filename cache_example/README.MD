@@ -1,0 +1,2 @@
+- [cached](https://github.com/jaemk/cached/tree/master/examples)
+- [moka](https://github.com/moka-rs/moka)
