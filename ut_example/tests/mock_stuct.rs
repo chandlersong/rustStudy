@@ -51,8 +51,10 @@ impl Staff {
 
 
 #[cfg(test)]
-mod t {
+mod test{
+    use crate::thing::MockAsyncThing;
     use super::*;
+    use mockall_double::double; // 确保导入 double 宏
 
     #[test]
     fn test_method() {
@@ -69,7 +71,6 @@ mod t {
         let actual = do_async_stuff(&mock).await;
         assert_eq!(actual, 88)
     }
-
 
     #[test]
     fn test_struct(){
