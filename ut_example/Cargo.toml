@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 mockall_double = "0.3.1"
+tokio = { version = "1", features = ["full"] }
 
 [dev-dependencies]
 mockall = "0.12.0"
