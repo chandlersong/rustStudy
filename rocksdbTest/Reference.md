@@ -1,0 +1,2 @@
+- [rocksdb](https://docs.rs/rocksdb/latest/rocksdb/)
+  - [github repository](https://github.com/rust-rocksdb/rust-rocksdb)
