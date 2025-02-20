@@ -8,7 +8,7 @@ RUN apt-get  update &&\
 
 COPY --from=Rocksdb /usr/lib/x86_64-linux-gnu/librocksdb* /usr/lib/x86_64-linux-gnu/
 #ENV ROCKSDB_LIB_DIR /usr/include/rocksdb
-ENV ROCKSDB_LIB_DIR /usr/lib/x86_64-linux-gnu/
+ENV ROCKSDB_LIB_DIR /usr/lib/x86_64-linux-gnu
 #ENV RLD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
 COPY . .
 ##ADD ../../cargo.config /usr/local/cargo/config.toml
