@@ -18,10 +18,16 @@ RUN git clone --branch v9.9.3 --depth 1 https://github.com/facebook/rocksdb.git 
 # 编译安装
 WORKDIR /tmp/rocksdb
 RUN git checkout 14d3046 &&\
-    mkdir build && cd build &&\
-     cmake .. &&\
-     make &&\
-     make install
+    mkdir build && cd build \
+    && cmake -DCMAKE_BUILD_TYPE=Release \
+        -DWITH_TESTS=OFF \
+        -DWITH_TOOLS=OFF \
+        -DWITH_BENCHMARK_TOOLS=OFF \
+        -DROCKSDB_LITE=OFF \
+        -DPORTABLE=1 \
+        .. \
+    && make -j$(nproc) \
+    && make install
 
 RUN rm -rf /tmp/rocksdb
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
