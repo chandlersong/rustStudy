@@ -3,9 +3,10 @@
 build_rocksdb_docker_and_run:
 	git pull
 	docker build -f dockers/common/Dockerfile --build-arg APP_NAME=rocksdbTest -t rocksdbtest .
-
+	docker run --rm -it rocksdbtest bash
 
 build_rocksdb:
 	git pull
 	docker build  -f dockers/rocksdb/Dockerfile --build-arg APP_NAME=rocksdbTest -t chandlersong/rocksdb:bookworm-slim-9.9.3  .
+	docker push chandlersong/rocksdb:bookworm-slim-9.9.3
 	docker run --rm -it chandlersong/rocksdb:bookworm-slim-9.9.3 bash
