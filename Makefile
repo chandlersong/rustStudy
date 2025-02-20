@@ -13,5 +13,5 @@ build_rocksdb:
 
 build_rocksdb_with_rust:
 	git pull
-	docker build  -f dockers/rocksdb/Dockerfile --build-arg APP_NAME=rocksdbTest -t chandlersong/rust_with_rocksdb:1.80.1 .
+	docker build  -f dockers/rust_with_rocketdb/Dockerfile --build-arg APP_NAME=rocksdbTest -t chandlersong/rust_with_rocksdb:1.80.1 .
 	docker push chandlersong/rust_with_rocksdb:1.80.1_9.9.3
