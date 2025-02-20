@@ -1,9 +1,10 @@
 FROM debian:bookworm-slim
-
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     build-essential \
     git \
     cmake \
+    libgflags-dev \
     libsnappy-dev \
     zlib1g-dev \
     libbz2-dev \
