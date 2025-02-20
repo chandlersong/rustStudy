@@ -27,28 +27,4 @@ COPY --from=Rocksdb /usr/lib/x86_64-linux-gnu/librocksdb* /usr/lib/x86_64-linux-
 # 设置环境变量以避免交互式提示
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 更新包列表并安装依赖项
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    git \
-    cmake \
-    libsnappy-dev \
-    zlib1g-dev \
-    libbz2-dev \
-    liblz4-dev \
-    libzstd-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# 克隆 RocksDB 源代码
-RUN git clone --recursive https://github.com/facebook/rocksdb.git /rocksdb
-
-# 构建 RocksDB
-WORKDIR /rocksdb
-RUN mkdir build && cd build && \
-    cmake .. && \
-    make -j$(nproc) && \
-    make install
-
-# 清理不必要的文件
-RUN rm -rf /rocksdb
 
