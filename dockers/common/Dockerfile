@@ -21,10 +21,13 @@ FROM debian:bookworm-slim AS runtime
 #    apt install -y apt-transport-https ca-certificates \
 #RUN rm -rf /etc/apt/*
 #ADD ../../sources.list /etc/apt/sources.list
+RUN apt-get  update &&\
+    apt-get  install -y libgflags-dev
 ARG APP_NAME=test
 COPY --from=builder /app/target/release/${APP_NAME} /app/app
 COPY --from=Rocksdb /usr/lib/x86_64-linux-gnu/librocksdb* /usr/lib/x86_64-linux-gnu/
 ## 设置环境变量以避免交互式提示
 #ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /app
 
 
