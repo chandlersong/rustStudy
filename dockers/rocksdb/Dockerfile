@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim
 
-RUN apt-get update && apt-get install -y build-essential libsnappy-dev zlib1g-dev libbz2-dev libgflags-dev wget
+RUN apt-get update && apt-get install -y build-essential libsnappy-dev zlib1g-dev libbz2-dev libgflags-dev wget git
 
 
 # 下载指定版本的 RocksDB 源码
