@@ -14,17 +14,17 @@ COPY . .
 ##ADD ../../cargo.config /usr/local/cargo/config.toml
 #ENV RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
 #ENV RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
-RUN cargo build --release
-
-FROM debian:bookworm-slim AS runtime
-#RUN apt update &&\
-#    apt install -y apt-transport-https ca-certificates \
-#RUN rm -rf /etc/apt/*
-#ADD ../../sources.list /etc/apt/sources.list
-ARG APP_NAME=test
-COPY --from=builder /app/target/release/${APP_NAME} /app/app
-COPY --from=Rocksdb /usr/lib/x86_64-linux-gnu/librocksdb* /usr/lib/x86_64-linux-gnu/
-# 设置环境变量以避免交互式提示
-ENV DEBIAN_FRONTEND=noninteractive
+#RUN cargo build --release
+#
+#FROM debian:bookworm-slim AS runtime
+##RUN apt update &&\
+##    apt install -y apt-transport-https ca-certificates \
+##RUN rm -rf /etc/apt/*
+##ADD ../../sources.list /etc/apt/sources.list
+#ARG APP_NAME=test
+#COPY --from=builder /app/target/release/${APP_NAME} /app/app
+#COPY --from=Rocksdb /usr/lib/x86_64-linux-gnu/librocksdb* /usr/lib/x86_64-linux-gnu/
+### 设置环境变量以避免交互式提示
+##ENV DEBIAN_FRONTEND=noninteractive
 
 
