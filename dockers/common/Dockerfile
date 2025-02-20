@@ -4,7 +4,7 @@ FROM chandlersong/rocksdb:bookworm-slim-9.9.3 AS Rocksdb
 FROM rust:1.80.1 AS builder
 WORKDIR /app
 RUN apt-get  update &&\
-    apt-get  install -y pkg-config libssl-dev openssl ca-certificates
+    apt-get  install -y pkg-config libssl-dev openssl ca-certificates clang llvm
 
 COPY --from=Rocksdb /usr/lib/x86_64-linux-gnu/librocksdb* /usr/lib/x86_64-linux-gnu/
 #ENV ROCKSDB_LIB_DIR /usr/include/rocksdb
