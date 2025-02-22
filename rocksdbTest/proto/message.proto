@@ -1,0 +1,9 @@
+syntax = "proto3";
+package tutorial;
+
+// 一个简单的消息
+message Person {
+  string name = 1;
+  int32 age = 2;
+  string email = 3;
+}
