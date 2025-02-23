@@ -11,7 +11,7 @@ build_rocksdb:
 	docker push chandlersong/rocksdb:bookworm-slim-9.9.3
 	docker run --rm -it chandlersong/rocksdb:bookworm-slim-9.9.3 bash
 
-build_rocksdb_with_rust:
+build_rust_ci:
 	git pull
 	docker build  -f dockers/rust_ci/Dockerfile --build-arg APP_NAME=rocksdbTest -t chandlersong/rust_ci:v1 .
 	docker push chandlersong/rust_ci:v1
