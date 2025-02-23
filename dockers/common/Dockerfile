@@ -1,4 +1,4 @@
-FROM chandlersong/rocksdb:bookworm-slim-9.9.3 AS Rocksdb
+FROM chandlersong/rocksdb:bookworm-slim-9.9.3 AS rocksdb
 
 # Dockerfile
 FROM rust:1.80.1 AS builder
