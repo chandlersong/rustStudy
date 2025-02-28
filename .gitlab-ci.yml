@@ -5,6 +5,8 @@ variables:
 build_and_push:
   stage: build_ci
   image: docker:20.10  # 使用带有 Docker CLI 的镜像
+  services:
+    - docker:dind
   variables:
     DOCKER_HOST: tcp://docker:2375  # 指定 Docker 守护进程地址
   script:
