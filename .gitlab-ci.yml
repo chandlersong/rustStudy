@@ -1,5 +1,7 @@
 stages:
   - build_ci
+variables:
+  image_tag: "1.85-slim-bookworm.1"  # 默认值
 build:
   stage: build_ci
   image: docker:latest
@@ -11,5 +13,3 @@ build:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     - docker push chandlersong/rust_ci:{image_tag}
   when: manual  # 手动触发
-  variables:
-    image_tag: "1.85-slim-bookworm.1"  # 默认值
