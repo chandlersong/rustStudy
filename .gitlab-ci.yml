@@ -6,7 +6,8 @@ build:
   services:
     - docker:dind
   script:
-    - docker build -f dockers/rust_ci/Dockerfile -t chandlersong/rust_ci:{image_tag}
+    - docker buildx create --use  # 创建并使用 buildx builder
+    - docker buildx build-f dockers/rust_ci/Dockerfile -t chandlersong/rust_ci:{image_tag}
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     - docker push chandlersong/rust_ci:{image_tag}
   when: manual  # 手动触发
