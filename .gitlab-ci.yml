@@ -10,7 +10,7 @@ build_and_push:
   variables:
     DOCKER_HOST: tcp://docker:2375  # 指定 Docker 守护进程地址
   script:
-    - echo "{DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     - docker build -f dockers/rust_ci/Dockerfile -t chandlersong/rust_ci:{image_tag} .
     - docker push chandlersong/rust_ci:{image_tag}
   when: manual  # 手动触发
