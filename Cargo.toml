@@ -7,7 +7,7 @@ members = [
     "TraitTest",
     "ut_example", "cache_example",
     "concurrency_test"
-, "websocket_ex", "rocksdbTest"]
+, "websocket_ex", "rocksdbTest", "macro_example", "marco_tests"]
 
 
 [workspace.dependencies]
