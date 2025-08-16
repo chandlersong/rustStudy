@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 crossbeam = "0.8"
+tokio-stream = "0.1"

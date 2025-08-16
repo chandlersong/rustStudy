@@ -1,7 +1,7 @@
 stages:
   - build_ci
 variables:
-  image_tag: "1.85-slim-bookworm.1"  # 默认值
+  image_tag: "1.89-slim-bookworm"  # 默认值
 build_and_push:
   stage: build_ci
   image: docker:20.10  # 使用带有 Docker CLI 的镜像
