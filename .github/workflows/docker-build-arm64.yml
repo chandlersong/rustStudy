@@ -9,7 +9,7 @@ on:
 jobs:
   build_arm64:
     # 在 GitHub 提供的 arm64 runner 上原生构建（无需 QEMU）
-    runs-on: ubuntu-latest-arm64
+    runs-on: ubuntu-24.04-arm
 
     steps:
       - name: Checkout code
