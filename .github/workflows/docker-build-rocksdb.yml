@@ -67,10 +67,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Inspect image
-        run: |
-          docker manifest inspect chandlersong/rocksdb:${{ inputs.image_tag }}-amd64
-          docker manifest inspect chandlersong/rocksdb:${{ inputs.image_tag }}-arm64
       - name: Create and push multi-arch manifest for rocksdb
         run: |
           docker manifest create chandlersong/rocksdb:${{ inputs.image_tag }} \
