@@ -30,7 +30,7 @@ jobs:
           file: dockers/rocksdb/Dockerfile
           push: true
           platforms: linux/amd64
-          tags: chandlersong/rocksdb:bookworm-slim-9.9.3-amd64
+          tags: chandlersong/rocksdb:bookworm-slim-9.9.3-amd64-${{ github.run_id }}
 
   build_arm64:
     runs-on: ubuntu-24.04-arm
@@ -55,7 +55,7 @@ jobs:
           file: dockers/rocksdb/Dockerfile
           push: true
           platforms: linux/arm64
-          tags: chandlersong/rocksdb:bookworm-slim-9.9.3-arm64
+          tags: chandlersong/rocksdb:bookworm-slim-9.9.3-arm64-${{ github.run_id }}
 
   build_manifest:
     runs-on: ubuntu-latest
@@ -71,6 +71,6 @@ jobs:
       - name: Create and push multi-arch manifest for rocksdb
         run: |
           docker manifest create chandlersong/rocksdb:bookworm-slim-9.9.3 \
-            chandlersong/rocksdb:bookworm-slim-9.9.3-amd64 \
-            chandlersong/rocksdb:bookworm-slim-9.9.3-arm64
+            chandlersong/rocksdb:bookworm-slim-9.9.3-amd64-${{ github.run_id }} \
+            chandlersong/rocksdb:bookworm-slim-9.9.3-arm64-${{ github.run_id }}
           docker manifest push chandlersong/rocksdb:bookworm-slim-9.9.3
