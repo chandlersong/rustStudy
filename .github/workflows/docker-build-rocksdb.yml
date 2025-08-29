@@ -61,6 +61,9 @@ jobs:
     needs: [build_and_push_multiarch, build_arm64]
 
     steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -69,7 +72,6 @@ jobs:
 
       - name: Create and push multi-arch manifest for rocksdb
         run: |
-          docker manifest create chandlersong/rocksdb:${{ inputs.image_tag }} \
+          docker buildx imagetools create --tag chandlersong/rocksdb:${{ inputs.image_tag }} \
             chandlersong/rocksdb:${{ inputs.image_tag }}-amd64 \
             chandlersong/rocksdb:${{ inputs.image_tag }}-arm64
-          docker manifest push chandlersong/rocksdb:${{ inputs.image_tag }}
