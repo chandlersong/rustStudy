@@ -1,0 +1,76 @@
+name: Build RocksDB Multi-Arch
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Docker image tag (for rocksdb, fixed but kept for consistency)'
+        required: true
+        default: 'bookworm-slim-9.9.3'
+jobs:
+  build_amd64:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push rocksdb image (amd64)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: dockers/rocksdb/Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: chandlersong/rocksdb:bookworm-slim-9.9.3-amd64
+
+  build_arm64:
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push rocksdb image (arm64)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: dockers/rocksdb/Dockerfile
+          push: true
+          platforms: linux/arm64
+          tags: chandlersong/rocksdb:bookworm-slim-9.9.3-arm64
+
+  build_manifest:
+    runs-on: ubuntu-latest
+    needs: [build_amd64, build_arm64]
+
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Create and push multi-arch manifest for rocksdb
+        run: |
+          docker manifest create chandlersong/rocksdb:bookworm-slim-9.9.3 \
+            chandlersong/rocksdb:bookworm-slim-9.9.3-amd64 \
+            chandlersong/rocksdb:bookworm-slim-9.9.3-arm64
+          docker manifest push chandlersong/rocksdb:bookworm-slim-9.9.3
