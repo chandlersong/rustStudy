@@ -95,3 +95,4 @@ fabric.properties
 .idea
 
 /rocksdbTest/db/
+.DS_STORE
