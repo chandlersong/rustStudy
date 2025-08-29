@@ -1,4 +1,4 @@
-name: Build and Push Docker Images (Multi-Arch)
+name: Build and Push rust base (Multi-Arch)
 on:
   workflow_dispatch:
     inputs:
