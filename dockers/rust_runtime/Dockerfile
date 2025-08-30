@@ -1,6 +1,7 @@
 FROM debian:bookworm-slim AS runtime
 ARG TARGETARCH
-RUN if [ "$TARGETARCH" = "amd64" ]; then LIBDIR="x86_64-linux-gnu"; else LIBDIR="aarch64-linux-gnu"; fi
+ARG LIBDIR
+ENV LIBDIR=${LIBDIR}
 ENV ROCKSDB_LIB_DIR=/usr/lib/${LIBDIR}
 ENV OPENSSL_INCLUDE_DIR=/usr/include/openssl
 ENV OPENSSL_LIB_DIR=/usr/lib/${LIBDIR}

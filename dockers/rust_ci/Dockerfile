@@ -1,8 +1,9 @@
 FROM chandlersong/rocksdb:bookworm-slim-9.9.3 AS rocksdb
 FROM rust:1.89-slim-bookworm AS rust
 ARG TARGETARCH
-RUN if [ "$TARGETARCH" = "amd64" ]; then LIBDIR="x86_64-linux-gnu"; else LIBDIR="aarch64-linux-gnu"; fi &&\
-    apt-get  update &&\
+ARG LIBDIR
+ENV LIBDIR=${LIBDIR}
+RUN apt-get  update &&\
     apt-get  install -y clang llvm libgflags-dev protobuf-compiler libssl-dev
 COPY --from=rocksdb /usr/lib/${LIBDIR}/librocksdb* /usr/lib/${LIBDIR}/
 ENV ROCKSDB_LIB_DIR=/usr/lib/${LIBDIR}
