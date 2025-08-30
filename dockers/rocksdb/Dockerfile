@@ -1,6 +1,7 @@
 FROM debian:bookworm-slim
-ARG TARGETARCH
+ARG LIBDIR
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LIBDIR=${LIBDIR}
 RUN apt-get update && apt-get install -y \
     build-essential \
     git \
@@ -19,8 +20,7 @@ RUN git clone --branch v9.9.3 --depth 1 https://github.com/facebook/rocksdb.git 
 
 # 编译安装
 WORKDIR /tmp/rocksdb
-RUN git checkout 14d3046 &&\
-    if [ "$TARGETARCH" = "amd64" ]; then LIBDIR="lib/x86_64-linux-gnu"; elif [ "$TARGETARCH" = "arm64" ]; then LIBDIR="lib/aarch64-linux-gnu"; else LIBDIR="lib"; fi &&\
+RUN git checkout 14d3046 && \
     mkdir build && cd build \
     && cmake -DCMAKE_BUILD_TYPE=Release \
         -DWITH_TESTS=OFF \
@@ -29,7 +29,7 @@ RUN git checkout 14d3046 &&\
         -DROCKSDB_LITE=OFF \
         -DPORTABLE=1 \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_INSTALL_LIBDIR=$LIBDIR \
+        -DCMAKE_INSTALL_LIBDIR=lib/${LIBDIR} \
         .. \
     && make -j$(nproc) \
     && make install

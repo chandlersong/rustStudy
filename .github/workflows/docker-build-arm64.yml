@@ -36,7 +36,6 @@ jobs:
           platforms: linux/amd64
           tags: chandlersong/rust_ci:${{ inputs.image_tag }}-amd64
           build-args: |
-            TARGETARCH=amd64
             LIBDIR=x86_64-linux-gnu
       - name: Build and push rust_runtime image (amd64)
         uses: docker/build-push-action@v5
@@ -47,7 +46,6 @@ jobs:
           platforms: linux/amd64
           tags: chandlersong/rust_runtime:${{ inputs.image_tag }}-amd64
           build-args: |
-            TARGETARCH=amd64
             LIBDIR=x86_64-linux-gnu
   build_rust_arm64:
     runs-on: ubuntu-24.04-arm
@@ -74,7 +72,6 @@ jobs:
           platforms: linux/arm64
           tags: chandlersong/rust_ci:${{ inputs.image_tag }}-arm64
           build-args: |
-            TARGETARCH=arm64
             LIBDIR=aarch64-linux-gnu
       - name: Build and push rust_runtime image (arm64)
         uses: docker/build-push-action@v5
@@ -85,7 +82,6 @@ jobs:
           platforms: linux/arm64
           tags: chandlersong/rust_runtime:${{ inputs.image_tag }}-arm64
           build-args: |
-            TARGETARCH=arm64
             LIBDIR=aarch64-linux-gnu
   build_manifest:
     runs-on: ubuntu-latest

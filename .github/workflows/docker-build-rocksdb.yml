@@ -31,7 +31,7 @@ jobs:
           push: true
           tags: chandlersong/rocksdb:${{ inputs.image_tag }}-amd64
           build-args: |
-            TARGETARCH=amd64
+            LIBDIR=x86_64-linux-gnu
   build_arm64:
     runs-on: ubuntu-24.04-arm
 
@@ -57,7 +57,7 @@ jobs:
           push: true
           tags: chandlersong/rocksdb:${{ inputs.image_tag }}-arm64
           build-args: |
-            TARGETARCH=arm64
+            LIBDIR=aarch64-linux-gnu
   build_manifest:
     runs-on: ubuntu-latest
     needs: [build_and_push_multiarch, build_arm64]

@@ -1,6 +1,5 @@
 FROM chandlersong/rocksdb:bookworm-slim-9.9.3 AS rocksdb
 FROM rust:1.89-slim-bookworm AS rust
-ARG TARGETARCH
 ARG LIBDIR
 ENV LIBDIR=${LIBDIR}
 RUN apt-get  update &&\

@@ -1,5 +1,4 @@
 FROM debian:bookworm-slim AS runtime
-ARG TARGETARCH
 ARG LIBDIR
 ENV LIBDIR=${LIBDIR}
 ENV ROCKSDB_LIB_DIR=/usr/lib/${LIBDIR}
