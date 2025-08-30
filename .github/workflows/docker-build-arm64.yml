@@ -93,12 +93,12 @@ jobs:
       - name: Create and push multi-arch manifest for rust_ci
         run: |
           docker buildx imagetools create --tag chandlersong/rust_ci:${{ inputs.image_tag }} \
-            chandlersong/rust_ci:amd64 \
-            chandlersong/rust_ci:arm64
+            chandlersong/rust_ci:${{ inputs.image_tag }}-amd64 \
+            chandlersong/rust_ci:${{ inputs.image_tag }}-arm64
 
       - name: Create and push multi-arch manifest for rust_runtime
         run: |
           docker buildx imagetools create --tag chandlersong/rust_runtime:${{ inputs.image_tag }} \
-            chandlersong/rust_runtime:amd64 \
-            chandlersong/rust_runtime:arm64
+            chandlersong/rust_runtime:${{ inputs.image_tag }}-amd64 \
+            chandlersong/rust_runtime:${{ inputs.image_tag }}-arm64
    
