@@ -1,7 +1,9 @@
 FROM chandlersong/rocksdb:bookworm-slim-9.9.3 AS rocksdb
 FROM rust:1.89-slim-bookworm AS rust
 ARG LIBDIR
+ARG duckdb_os_type
 ENV LIBDIR=${LIBDIR}
+ENV duckdb_os_type=${duckdb_os_type}
 RUN apt-get  update &&\
     apt-get  install -y clang llvm libgflags-dev protobuf-compiler libssl-dev unzip wget
 # install rocksdb
