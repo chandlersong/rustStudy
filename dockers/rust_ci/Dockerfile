@@ -21,32 +21,47 @@ ENV VCPKG_ROOT=/opt/vcpkg
 ENV PATH="$VCPKG_ROOT:$PATH"
 ENV DUCKDB_DEST=/opt/libduckdb
 
+ENV VCPKG_ROOT=/opt/vcpkg
+ENV DUCKDB_DEST=/opt/libduckdb
+
+# Install build tools and dependencies
 RUN set -eux; \
     apt-get update; \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       git curl ca-certificates build-essential cmake ninja-build pkg-config python3 unzip wget g++; \
-    rm -rf /var/lib/apt/lists/*; \
+    rm -rf /var/lib/apt/lists/*
+
+# Clone and bootstrap vcpkg
+RUN set -eux; \
     git clone --depth=1 https://github.com/microsoft/vcpkg "$VCPKG_ROOT"; \
     cd "$VCPKG_ROOT"; \
     ./bootstrap-vcpkg.sh -useSystemBinaries; \
-    ln -sf "$VCPKG_ROOT/vcpkg" /usr/local/bin/vcpkg; \
-    # pick triplet based on TARGETARCH; default to x64-linux
+    ln -sf "$VCPKG_ROOT/vcpkg" /usr/local/bin/vcpkg
+
+# Determine triplet and install duckdb
+RUN set -eux; \
     case "$TARGETARCH" in \
-      arm64|aarch64) TRIPLET=arm64-linux ;; \
-      *) TRIPLET=x64-linux ;; \
+      arm64) TRIPLET=arm64-linux ;; \
+      amd64) TRIPLET=x64-linux ;; \
+      *) echo "Unsupported TARGETARCH: $TARGETARCH"; exit 1 ;; \
     esac; \
     echo "Using vcpkg triplet: $TRIPLET"; \
-    # Install duckdb and its dependencies into vcpkg installed/<triplet>
     "$VCPKG_ROOT/vcpkg" install duckdb:"$TRIPLET" --recurse; \
-    # Collect libs/bins into a simple folder for runtime copy
     mkdir -p "$DUCKDB_DEST"; \
     cp -a "$VCPKG_ROOT/installed/$TRIPLET/lib" "$DUCKDB_DEST/" 2>/dev/null || true; \
-    cp -a "$VCPKG_ROOT/installed/$TRIPLET/bin" "$DUCKDB_DEST/" 2>/dev/null || true; \
-    # leave vcpkg tree in place for reuse
+    cp -a "$VCPKG_ROOT/installed/$TRIPLET/bin" "$DUCKDB_DEST/" 2>/dev/null || true
 
-RUN wget https://github.com/duckdb/duckdb/releases/download/v1.3.2/libduckdb-linux-${TARGETARCH}.zip &&\
-    unzip libduckdb-linux-${TARGETARCH}.zip  -d /opt/libduckdb &&\
+# Download prebuilt libduckdb (fallback or alternative)
+RUN set -eux; \
+    case "$TARGETARCH" in \
+      amd64) ARCH=amd64 ;; \
+      arm64) ARCH=aarch64 ;; \
+      *) echo "Unsupported TARGETARCH: $TARGETARCH"; exit 1 ;; \
+    esac; \
+    wget https://github.com/duckdb/duckdb/releases/download/v1.3.2/libduckdb-linux-${TARGETARCH}.zip; \
+    unzip libduckdb-linux-${TARGETARCH}.zip -d /opt/libduckdb; \
     rm libduckdb-linux-${TARGETARCH}.zip
+    # leave vcpkg tree in place for reuse
 
 ENV DUCKDB_LIB_DIR=$DUCKDB_DEST
 ENV DUCKDB_INCLUDE_DIR=$VCPKG_ROOT/installed/x64-linux/include
