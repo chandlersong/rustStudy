@@ -8,6 +8,9 @@ RUN apt-get  update &&\
 COPY --from=rocksdb /usr/lib/${LIBDIR}/librocksdb* /usr/lib/${LIBDIR}/
 ENV ROCKSDB_LIB_DIR=/usr/lib/${LIBDIR}
 
+RUN apt update && \
+    apt install -y unzip wget
+
 # install duckdb
 RUN wget https://github.com/duckdb/duckdb/releases/download/v1.3.2/libduckdb-osx-universal.zip **\
     unzip libduckdb-osx-universal.zip -d /opt/libduckdb
