@@ -37,7 +37,7 @@ jobs:
           tags: chandlersong/rust_ci:${{ inputs.image_tag }}-amd64
           build-args: |
             LIBDIR=x86_64-linux-gnu
-            duckdb_os_type=amd64
+            TARGETARCH=amd64
       - name: Build and push rust_runtime image (amd64)
         uses: docker/build-push-action@v5
         with:
@@ -74,7 +74,7 @@ jobs:
           tags: chandlersong/rust_ci:${{ inputs.image_tag }}-arm64
           build-args: |
             LIBDIR=aarch64-linux-gnu
-            duckdb_os_type=arm64
+            TARGETARCH=arm64
       - name: Build and push rust_runtime image (arm64)
         uses: docker/build-push-action@v5
         with:
