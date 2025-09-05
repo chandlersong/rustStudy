@@ -10,7 +10,8 @@ ENV ROCKSDB_LIB_DIR=/usr/lib/${LIBDIR}
 
 # install duckdb
 RUN wget https://github.com/duckdb/duckdb/releases/download/v1.3.2/libduckdb-osx-universal.zip &&\
-    unzip libduckdb-osx-universal.zip -d /opt/libduckdb
+    unzip libduckdb-osx-universal.zip -d /opt/libduckdb &&\
+    rm libduckdb-osx-universal.zip
 ENV DUCKDB_LIB_DIR=/opt/libduckdb
 ENV DUCKDB_INCLUDE_DIR=$DUCKDB_LIB_DIR
 ENV LD_LIBRARY_PATH=$DUCKDB_LIB_DIR
