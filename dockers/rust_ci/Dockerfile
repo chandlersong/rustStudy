@@ -7,6 +7,7 @@ ENV duckdb_os_type=${duckdb_os_type}
 RUN apt-get  update &&\
     apt-get  install -y clang llvm libgflags-dev protobuf-compiler libssl-dev unzip wget
 # install rocksdb
+ENV ROCKSDB_STATIC=1
 COPY --from=rocksdb /usr/lib/${LIBDIR}/librocksdb* /usr/lib/${LIBDIR}/
 ENV ROCKSDB_LIB_DIR=/usr/lib/${LIBDIR}
 
