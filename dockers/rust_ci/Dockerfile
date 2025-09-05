@@ -12,9 +12,9 @@ RUN apt update && \
     apt install -y unzip wget
 
 # install duckdb
-RUN wget https://github.com/duckdb/duckdb/releases/download/v1.3.2/libduckdb-linux-arm64.zip &&\
-    unzip libduckdb-linux-arm64.zip  -d /opt/libduckdb &&\
-    rm libduckdb-linux-arm64.zip
+RUN wget https://github.com/duckdb/duckdb/releases/download/v1.3.2/libduckdb-linux-${duckdb_os_type}.zip &&\
+    unzip libduckdb-linux-${duckdb_os_type}.zip  -d /opt/libduckdb &&\
+    rm libduckdb-linux-${duckdb_os_type}.zip
 ENV DUCKDB_LIB_DIR=/opt/libduckdb
 ENV DUCKDB_INCLUDE_DIR=$DUCKDB_LIB_DIR
 ENV LD_LIBRARY_PATH=$DUCKDB_LIB_DIR
